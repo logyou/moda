@@ -16,7 +16,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-//@MapperScan("com.moda.demo")
+@MapperScan("com.moda.demo")
 @EnableConfigurationProperties(SysProperties.class)
 public class DemoServiceApplication {
     public static void main(String[] args) {

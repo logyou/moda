@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: dev
   application:
     name: moda-demo-service
   cloud:

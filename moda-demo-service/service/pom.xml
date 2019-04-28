@@ -19,6 +19,7 @@
         <groupId>com.moda</groupId>
         <artifactId>moda-demo-parent</artifactId>
         <version>1.0.0.1</version>
+        <relativePath/>
     </parent>
 
     <dependencies>
@@ -65,8 +66,17 @@
             <artifactId>logback-kafka-appender</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.moda</groupId>
-            <artifactId>moda-mybatis-spring-boot-starter</artifactId>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 

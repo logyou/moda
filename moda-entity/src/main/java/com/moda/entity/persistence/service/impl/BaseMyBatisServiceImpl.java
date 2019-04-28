@@ -5,6 +5,7 @@ import com.moda.entity.persistence.entity.BaseMyBatisEntity;
 import com.moda.entity.persistence.service.BaseMyBatisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -13,44 +14,41 @@ import java.util.List;
  * Base MyBatis Service 实现抽象类
  *
  * @author lyh
- * @create 2018-9-26
+ * @date 2019-04-29 00:17:23
  **/
 @Transactional(readOnly = true, rollbackFor = Exception.class)
-public abstract class BaseMyBatisServiceImpl<D extends BaseMyBatisDao<T>, T extends BaseMyBatisEntity> implements BaseMyBatisService<T> {
+public abstract class BaseMyBatisServiceImpl<D extends BaseMyBatisDao<E>, E extends BaseMyBatisEntity> implements BaseMyBatisService<E> {
     public final Logger logger = LoggerFactory.getLogger(getClass());
 
+    @Autowired
     protected D dao;
 
-    public BaseMyBatisServiceImpl(D dao) {
-        this.dao = dao;
-    }
-
     @Override
-    public T get(Integer id) {
+    public E get(Integer id) {
         return dao.get(id);
     }
 
     @Override
-    public List<T> listAll() {
+    public List<E> listAll() {
         return dao.listAll();
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int insert(T t) {
-        return dao.insert(t);
+    public int insert(E e) {
+        return dao.insert(e);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int insertBatch(List<T> list) {
+    public int insertBatch(List<E> list) {
         return dao.insertBatch(list);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int update(T t) {
-        return dao.update(t);
+    public int update(E e) {
+        return dao.update(e);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -60,36 +58,36 @@ public abstract class BaseMyBatisServiceImpl<D extends BaseMyBatisDao<T>, T exte
     }
 
     @Override
-    public T getByCondition(T t) {
-        return dao.getByCondition(t);
+    public E getByCondition(E e) {
+        return dao.getByCondition(e);
     }
 
     @Override
-    public List<T> listByCondition(T t) {
-        return dao.listByCondition(t);
+    public List<E> listByCondition(E e) {
+        return dao.listByCondition(e);
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public int save(T t) {
-        if (t.getIsNewRecord()) {
-            return insert(t);
+    public int save(E e) {
+        if (e.getIsNewRecord()) {
+            return insert(e);
         } else {
-            return update(t);
+            return update(e);
         }
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public T insertWithReturn(T t) {
-        insert(t);
-        return t;
+    public E insertWithReturn(E e) {
+        insert(e);
+        return e;
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public T saveWithReturn(T t) {
-        save(t);
-        return t;
+    public E saveWithReturn(E e) {
+        save(e);
+        return e;
     }
 }

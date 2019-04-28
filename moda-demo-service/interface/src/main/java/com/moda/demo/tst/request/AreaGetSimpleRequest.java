@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author lyh
  * @date 2019-04-28 18:10
  **/
-public class UserGetSimpleRequest extends BaseRequest {
+public class AreaGetSimpleRequest extends BaseRequest {
     @ApiModelProperty("ID")
     private Integer id;
 

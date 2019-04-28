@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moda.demo.tst.dao.AreaDao">
+    <select id="get" resultType="com.moda.demo.tst.entity.Area">
+        SELECT * FROM sys_area WHERE id= #{id}
+    </select>
+    <select id="listAll" resultType="com.moda.demo.tst.entity.Area">
+        SELECT * FROM sys_area
+    </select>
+    <insert id="insert" parameterType="com.moda.demo.tst.entity.Area" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="mergerId != null">
+                merger_id,
+            </if>
+            <if test="parentCode != null">
+                parent_code,
+            </if>
+            <if test="code != null">
+                code,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="shortName != null">
+                short_name,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="cityCode != null">
+                city_code,
+            </if>
+            <if test="zipCode != null">
+                zip_code,
+            </if>
+            <if test="mergerName != null">
+                merger_name,
+            </if>
+            <if test="lng != null">
+                lng,
+            </if>
+            <if test="lat != null">
+                lat,
+            </if>
+            <if test="pinyin != null">
+                pinyin,
+            </if>
+            <if test="isShow != null">
+                is_show,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="parentId != null">
+                #{parentId},
+            </if>
+            <if test="mergerId != null">
+                #{mergerId},
+            </if>
+            <if test="parentCode != null">
+                #{parentCode},
+            </if>
+            <if test="code != null">
+                #{code},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="shortName != null">
+                #{shortName},
+            </if>
+            <if test="sort != null">
+                #{sort},
+            </if>
+            <if test="type != null">
+                #{type},
+            </if>
+            <if test="cityCode != null">
+                #{cityCode},
+            </if>
+            <if test="zipCode != null">
+                #{zipCode},
+            </if>
+            <if test="mergerName != null">
+                #{mergerName},
+            </if>
+            <if test="lng != null">
+                #{lng},
+            </if>
+            <if test="lat != null">
+                #{lat},
+            </if>
+            <if test="pinyin != null">
+                #{pinyin},
+            </if>
+            <if test="isShow != null">
+                #{isShow},
+            </if>
+            <if test="remarks != null">
+                #{remarks},
+            </if>
+        </trim>
+    </insert>
+    <update id="delete">
+        DELETE FROM sys_area WHERE id = #{id}
+    </update>
+    <update id="update" parameterType="com.moda.demo.tst.entity.Area">
+        UPDATE sys_area
+        <set>
+            <if test="parentId != null">
+                parent_id = #{parentId},
+            </if>
+            <if test="mergerId != null">
+                merger_id = #{mergerId},
+            </if>
+            <if test="parentCode != null">
+                parent_code = #{parentCode},
+            </if>
+            <if test="code != null">
+                code = #{code},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="shortName != null">
+                short_name = #{shortName},
+            </if>
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="cityCode != null">
+                city_code = #{cityCode},
+            </if>
+            <if test="zipCode != null">
+                zip_code = #{zipCode},
+            </if>
+            <if test="mergerName != null">
+                merger_name = #{mergerName},
+            </if>
+            <if test="lng != null">
+                lng = #{lng},
+            </if>
+            <if test="lat != null">
+                lat = #{lat},
+            </if>
+            <if test="pinyin != null">
+                pinyin = #{pinyin},
+            </if>
+            <if test="isShow != null">
+                is_show = #{isShow},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <insert id="insertBatch" parameterType="com.moda.demo.tst.entity.Area">
+        INSERT INTO sys_area (
+        parent_id,
+        merger_id,
+        parent_code,
+        code,
+        name,
+        short_name,
+        sort,
+        type,
+        city_code,
+        zip_code,
+        merger_name,
+        lng,
+        lat,
+        pinyin,
+        is_show,
+        remarks
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.parentId},
+            #{item.mergerId},
+            #{item.parentCode},
+            #{item.code},
+            #{item.name},
+            #{item.shortName},
+            #{item.sort},
+            #{item.type},
+            #{item.cityCode},
+            #{item.zipCode},
+            #{item.mergerName},
+            #{item.lng},
+            #{item.lat},
+            #{item.pinyin},
+            #{item.isShow},
+            #{item.remarks}
+            )
+        </foreach>
+    </insert>
+    <sql id="whereCondition">
+        <where>
+            <if test="id != null">
+                AND id = #{id}
+            </if>
+            <if test="parentId != null">
+                AND parent_id = #{parentId}
+            </if>
+            <if test="mergerId != null">
+                AND merger_id = #{mergerId}
+            </if>
+            <if test="parentCode != null">
+                AND parent_code = #{parentCode}
+            </if>
+            <if test="code != null">
+                AND code = #{code}
+            </if>
+            <if test="name != null">
+                AND name = #{name}
+            </if>
+            <if test="shortName != null">
+                AND short_name = #{shortName}
+            </if>
+            <if test="sort != null">
+                AND sort = #{sort}
+            </if>
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+            <if test="cityCode != null">
+                AND city_code = #{cityCode}
+            </if>
+            <if test="zipCode != null">
+                AND zip_code = #{zipCode}
+            </if>
+            <if test="mergerName != null">
+                AND merger_name = #{mergerName}
+            </if>
+            <if test="lng != null">
+                AND lng = #{lng}
+            </if>
+            <if test="lat != null">
+                AND lat = #{lat}
+            </if>
+            <if test="pinyin != null">
+                AND pinyin = #{pinyin}
+            </if>
+            <if test="isShow != null">
+                AND is_show = #{isShow}
+            </if>
+            <if test="remarks != null">
+                AND remarks = #{remarks}
+            </if>
+        </where>
+    </sql>
+    <select id="getByCondition" parameterType="com.moda.demo.tst.entity.Area"
+            resultType="com.moda.demo.tst.entity.Area">
+        SELECT * FROM sys_area
+        <include refid="whereCondition"/>
+        LIMIT 1
+    </select>
+    <select id="listByCondition" parameterType="com.moda.demo.tst.entity.Area"
+            resultType="com.moda.demo.tst.entity.Area">
+        SELECT * FROM sys_area
+        <include refid="whereCondition"/>
+    </select>
+    <select id="getSimple" resultType="com.moda.demo.tst.response.AreaGetSimpleResponse">
+        SELECT id,name FROM sys_area WHERE id = #{id}
+    </select>
+
+</mapper>

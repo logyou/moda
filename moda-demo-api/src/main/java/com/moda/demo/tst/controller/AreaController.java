@@ -1,9 +1,9 @@
 package com.moda.demo.tst.controller;
 
 import com.moda.BaseController;
-import com.moda.demo.tst.request.UserGetSimpleRequest;
-import com.moda.demo.tst.response.UserGetSimpleResponse;
-import com.moda.demo.tst.service.UserService;
+import com.moda.demo.tst.request.AreaGetSimpleRequest;
+import com.moda.demo.tst.response.AreaGetSimpleResponse;
+import com.moda.demo.tst.service.AreaService;
 import com.moda.entity.rest.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,16 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2019-04-02 17:36:58
  **/
 @RestController
-@Api(tags = "用户", description = "用户操作相关接口")
-@RequestMapping(value = "/tst/user/", method = RequestMethod.POST)
-public class UserController extends BaseController {
+@Api(tags = "地区", description = "地区操作相关接口")
+@RequestMapping(value = "/tst/area/", method = RequestMethod.POST)
+public class AreaController extends BaseController {
     @Reference
-    private UserService userService;
+    private AreaService areaService;
 
     @RequestMapping("getSimple")
-    @ApiOperation(value = "用户信息", notes = "根据输入用户ID查询用户基本信息")
-    public Result<UserGetSimpleResponse> getSimple(@RequestBody UserGetSimpleRequest param) {
-        return success(userService.getSimple(param));
+    @ApiOperation(value = "地区信息", notes = "根据输入地区ID查询地区基本信息")
+    public Result<AreaGetSimpleResponse> getSimple(@RequestBody AreaGetSimpleRequest param) {
+        return success(areaService.getSimple(param));
     }
 
 }

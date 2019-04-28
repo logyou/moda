@@ -8,31 +8,31 @@ import java.util.List;
  * MyBatis DAO 接口
  *
  * @author lyh
- * @create 2018-9-11
+ * @date 2019-04-29 00:20:23
  **/
-public interface BaseMyBatisDao<T extends BaseMyBatisEntity> extends BaseDao {
+public interface BaseMyBatisDao<E extends BaseMyBatisEntity> extends BaseDao {
     /**
      * 根据主键ID查找一条记录
      *
      * @param id 主键ID
      * @return 一条记录或空
      */
-    T get(Integer id);
+    E get(Integer id);
 
     /**
      * 获取所有记录
      *
      * @return 多条记录或空
      */
-    List<T> listAll();
+    List<E> listAll();
 
     /**
      * 插入一条记录
      *
-     * @param t 记录
+     * @param e 记录
      * @return 影响行数
      */
-    int insert(T t);
+    int insert(E e);
 
     /**
      * 批量插入多条记录
@@ -40,15 +40,15 @@ public interface BaseMyBatisDao<T extends BaseMyBatisEntity> extends BaseDao {
      * @param list 记录列表
      * @return 影响行数
      */
-    int insertBatch(List<T> list);
+    int insertBatch(List<E> list);
 
     /**
      * 更新一条记录
      *
-     * @param t 记录
+     * @param e 记录
      * @return 匹配行数
      */
-    int update(T t);
+    int update(E e);
 
     /**
      * 根据主键ID删除一条记录
@@ -61,18 +61,18 @@ public interface BaseMyBatisDao<T extends BaseMyBatisEntity> extends BaseDao {
     /**
      * 根据条件查找一条记录
      *
-     * @param t 条件
+     * @param e 条件
      * @return 一条记录或空
      */
-    T getByCondition(T t);
+    E getByCondition(E e);
 
     /**
      * 根据条件查找多条记录
      *
-     * @param t 条件
+     * @param e 条件
      * @return 多条记录或空
      */
-    List<T> listByCondition(T t);
+    List<E> listByCondition(E e);
 
     /**
      * 保存数据（插入或更新）
@@ -82,7 +82,7 @@ public interface BaseMyBatisDao<T extends BaseMyBatisEntity> extends BaseDao {
      * @param entity 实体类
      * @return 受影响的条数
      */
-    default int save(T entity) {
+    default int save(E entity) {
         if (entity.getIsNewRecord()) {
             return insert(entity);
         } else {

@@ -19,6 +19,7 @@
         <groupId>com.moda</groupId>
         <artifactId>moda-boot-parent</artifactId>
         <version>1.0.0.1</version>
+        <relativePath/>
     </parent>
 
     <dependencies>

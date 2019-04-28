@@ -18,6 +18,5 @@
 
     <modules>
         <module>moda-swagger-spring-boot-starter</module>
-        <module>moda-mybatis-spring-boot-starter</module>
     </modules>
 </project>
