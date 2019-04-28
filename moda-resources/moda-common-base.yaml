@@ -1,0 +1,21 @@
+sys:
+  env: dev
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+dubbo:
+  scan:
+    basePackages: com.moda
+  registry:
+    address: nacos://localhost:8848
+  protocol:
+    name: dubbo
+    accesslog: true
+  provider:
+    timeout: 6000
+    validation: true
+  consumer:
+    timeout: 6000
+    check: false

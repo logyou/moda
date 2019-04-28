@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: moda-demo-api
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+        server-addr: localhost:8848
+        shared-dataids: moda-common-base.yaml,moda-common-api.yaml
+        refreshable-dataids: moda-common-base.yaml,moda-common-api.yaml

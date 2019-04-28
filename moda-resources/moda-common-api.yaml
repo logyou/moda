@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:1902
+      eager: true
+swagger:
+  enable: true
+  terms-of-service-url: http://localhost:1901
+  production: false
+  basic:
+    enable: false
+    username: swagger
+    password: swg0425

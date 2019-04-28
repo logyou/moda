@@ -1,0 +1,11 @@
+server:
+  port: 1911
+swagger:
+  title: 演示接口
+  description: 测试一下
+  version: 1.0
+  base-package: com.moda.demo
+  contact:
+    name: lyh
+    url: http://a.com
+    email: lyh@a.com

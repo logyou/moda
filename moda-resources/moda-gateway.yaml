@@ -1,0 +1,15 @@
+gateway:
+  auth-access: false
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: demo
+          uri: lb://moda-demo-api
+          predicates:
+            - Path=/demo/**
+          filters:
+            - RewritePath=/demo/(?<segment>.*), /$\{segment}

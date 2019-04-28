@@ -1,0 +1,2 @@
+# moda-dependencies
+all dependencies

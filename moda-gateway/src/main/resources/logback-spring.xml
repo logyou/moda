@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <contextName>logback</contextName>
+    <!--复制 Spring Boot 自定义风格的配置-->
+    <!--来自 spring-boot.jar 里的文件 \org\springframework\boot\logging\logback\defaults.xml-->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <!--自定义属性-->
+    <springProperty scope="context" name="module" source="spring.application.name"/>
+    <springProperty scope="context" name="topic" source="logback.appender.kafka.topic" defaultValue="applog"/>
+    <springProperty scope="context" name="bootstrapServers" source="logback.appender.kafka.bootstrap-servers"
+                    defaultValue="localhost:9092"/>
+    <springProperty scope="context" name="acks" source="logback.appender.kafka.acks" defaultValue="0"/>
+    <springProperty scope="context" name="lingerMs" source="logback.appender.kafka.linger-ms" defaultValue="1000"/>
+    <springProperty scope="context" name="maxBlockMs" source="logback.appender.kafka.max-block-ms" defaultValue="0"/>
+    <springProperty scope="context" name="logHome" source="logback.log-home" defaultValue="/data/logs"/>
+    <springProperty scope="context" name="maxHistory" source="logback.appender.max-history" defaultValue="30"/>
+    <springProperty scope="context" name="totalSizeCap" source="logback.appender.total-size-cap" defaultValue="3GB"/>
+
+    <!--输出到控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--输出到文件-->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--当前运行日志-->
+        <file>${logHome}/${module}/${module}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <fileNamePattern>${logHome}/${module}/${module}.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- 最多保留最近多少天的记录 -->
+            <maxHistory>${maxHistory}</maxHistory>
+            <!-- 最多保留最近多大的记录 -->
+            <totalSizeCap>${totalSizeCap}</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ${module} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--输出到Kafka-->
+    <appender name="kafka" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ${module} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <topic>${topic}</topic>
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"/>
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+        <producerConfig>bootstrap.servers=${bootstrapServers}</producerConfig>
+        <producerConfig>acks=${acks}</producerConfig>
+        <producerConfig>linger.ms=${lingerMs}</producerConfig>
+        <producerConfig>max.block.ms=${maxBlockMs}</producerConfig>
+        <producerConfig>client.id=${HOSTNAME}-${CONTEXT_NAME}-logback-relaxed</producerConfig>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+        <appender-ref ref="file"/>
+        <appender-ref ref="kafka"/>
+    </root>
+</configuration>
