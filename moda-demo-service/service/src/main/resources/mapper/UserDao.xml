@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moda.demo.dao.UserDao">
+  <select id="getSimple" resultType="com.moda.demo.response.UserGetSimpleResponse">
+    SELECT * FROM usr_user WHERE id = #{id}
+  </select>
+    <select id="listByStatus" resultType="com.moda.demo.entity.User">
+      SELECT * FROM usr_user WHERE status = #{status}
+    </select>
+</mapper>

@@ -26,6 +26,7 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>javax.validation</groupId>

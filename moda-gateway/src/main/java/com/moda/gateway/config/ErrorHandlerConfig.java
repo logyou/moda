@@ -1,6 +1,8 @@
 package com.moda.gateway.config;
 
 import com.moda.gateway.exception.JsonExceptionHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -27,6 +29,7 @@ import java.util.List;
 @Configuration
 @EnableConfigurationProperties({ServerProperties.class, ResourceProperties.class})
 public class ErrorHandlerConfig {
+    private static final Logger logger = LoggerFactory.getLogger(ErrorHandlerConfig.class);
     private final ServerProperties serverProperties;
     private final ApplicationContext applicationContext;
     private final ResourceProperties resourceProperties;
@@ -48,6 +51,7 @@ public class ErrorHandlerConfig {
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public ErrorWebExceptionHandler errorWebExceptionHandler(ErrorAttributes errorAttributes) {
+        logger.info("Init ErrorHandlerConfig.errorWebExceptionHandler...");
         JsonExceptionHandler exceptionHandler = new JsonExceptionHandler(
                 errorAttributes,
                 this.resourceProperties,

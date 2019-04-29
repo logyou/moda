@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <contextName>logback</contextName>
+    <logger name="com.moda" level="DEBUG"/>
     <!--复制 Spring Boot 自定义风格的配置-->
     <!--来自 spring-boot.jar 里的文件 \org\springframework\boot\logging\logback\defaults.xml-->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
@@ -68,4 +69,5 @@
         <appender-ref ref="file"/>
         <appender-ref ref="kafka"/>
     </root>
+
 </configuration>

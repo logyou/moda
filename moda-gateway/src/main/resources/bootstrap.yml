@@ -1,14 +1,10 @@
-server:
-  port: 1901
 spring:
-  profiles:
-    active: dev
   application:
     name: moda-gateway
   cloud:
     nacos:
       config:
         file-extension: yaml
-        server-addr: 127.0.0.1:8848
+        server-addr: localhost:8848
         shared-dataids: moda-common-base.yaml
         refreshable-dataids: moda-common-base.yaml

@@ -21,6 +21,7 @@ import java.util.Map;
  **/
 public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
     private final static Logger logger = LoggerFactory.getLogger(JsonExceptionHandler.class);
+    private final static String GATEWAY_TAG = "[GATEWAY]";
 
     public JsonExceptionHandler(ErrorAttributes errorAttributes, ResourceProperties resourceProperties, ErrorProperties errorProperties, ApplicationContext applicationContext) {
         super(errorAttributes, resourceProperties, errorProperties, applicationContext);
@@ -76,13 +77,13 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
         String message;
         switch (status) {
             case 404:
-                message = "[GATEWAY]您访问的服务地址不存在，请检查后重试！";
+                message = GATEWAY_TAG+"您访问的服务地址不存在，请检查后重试！";
                 break;
             case 503:
-                message = "[GATEWAY]系统维护中，服务暂时不可用！";
+                message = GATEWAY_TAG+"系统维护中，服务暂时不可用！";
                 break;
             default:
-                message = "[GATEWAY]抱歉，服务器繁忙，请稍后重试！";
+                message = GATEWAY_TAG+"抱歉，服务器繁忙，请稍后重试！";
                 break;
         }
         Map<String, Object> map = new HashMap<>(3);

@@ -49,9 +49,6 @@ public class Page<T> extends BaseEntity {
             this.pageCount = data.getPages();
             this.count = data.getTotal();
         } else {
-            this.pageNo = 1;
-            this.pageSize = list.size();
-            this.pageCount = 1;
             this.count = (long) list.size();
         }
     }
