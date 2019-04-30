@@ -17,11 +17,11 @@
         <moda-util.version>1.0.0.1</moda-util.version>
         <moda-web.version>1.0.0.1</moda-web.version>
         <moda-autoconfigure.version>1.0.0.1</moda-autoconfigure.version>
-        <devkeep-permission.version>1.1.0</devkeep-permission.version>
         <spring.version>5.1.5.RELEASE</spring.version>
         <spring-cloud-dependencies.version>Greenwich.SR1</spring-cloud-dependencies.version>
         <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
         <mybatis-spring-boot-starter.version>2.0.1</mybatis-spring-boot-starter.version>
+        <mybatis.version>3.5.1</mybatis.version>
         <druid.version>1.1.16</druid.version>
         <fastjson.version>1.2.49</fastjson.version>
         <mysql.driver.version>5.1.30</mysql.driver.version>
@@ -75,7 +75,6 @@
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <swagger-bootstrap-ui.version>1.9.3</swagger-bootstrap-ui.version>
         <moda-swagger-spring-boot-starter.version>1.0.0.1</moda-swagger-spring-boot-starter.version>
-        <moda-mybatis-spring-boot-starter.version>1.0.0.1</moda-mybatis-spring-boot-starter.version>
     </properties>
 
     <dependencyManagement>
@@ -106,6 +105,11 @@
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -329,11 +333,6 @@
                 <version>${moda-autoconfigure.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.devkeep</groupId>
-                <artifactId>devkeep-permission</artifactId>
-                <version>${devkeep-permission.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>${pagehelper-spring-boot-starter.version}</version>
@@ -460,11 +459,6 @@
                 <groupId>com.moda</groupId>
                 <artifactId>moda-swagger-spring-boot-starter</artifactId>
                 <version>${moda-swagger-spring-boot-starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.moda</groupId>
-                <artifactId>moda-mybatis-spring-boot-starter</artifactId>
-                <version>${moda-mybatis-spring-boot-starter.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

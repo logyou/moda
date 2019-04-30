@@ -27,6 +27,7 @@
         <module>moda-resources</module>
         <module>moda-api-doc</module>
         <module>moda-gateway</module>
+        <module>moda-generator</module>
         <module>moda-demo-service</module>
         <module>moda-demo-api</module>
     </modules>

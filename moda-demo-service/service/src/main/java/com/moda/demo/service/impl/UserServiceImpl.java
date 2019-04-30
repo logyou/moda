@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserGetSimpleResponse getSimple(UserGetSimpleRequest request) {
-        User user= userDao.selectByPrimaryKey(request.getId());
+        User user = userDao.selectByPrimaryKey(request.getId());
         return userDao.getSimple(request.getId());
     }
 
@@ -37,14 +37,21 @@ public class UserServiceImpl implements UserService {
         UserExample example = new UserExample();
         example.createCriteria().andMobileLike("%" + request.getMobile() + "%");
         PageHelper.startPage(request.getPageNo(), request.getPageSize(), request.isFirstPage());
-       List<User> list= userDao.selectByExample(example);
+        List<User> list = userDao.selectByExample(example);
         return Page.of(list);
     }
 
     @Override
     public Page<User> listByStatus(UserListByStatusRequest request) {
         PageHelper.startPage(request.getPageNo(), request.getPageSize(), request.isFirstPage());
-        List<User> list= userDao.listByStatus(request.getStatus());
+        List<User> list = userDao.listByStatus(request.getStatus());
         return Page.of(list);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public User saveUser(User user) {
+        userDao.insertSelective(user);
+        return user;
     }
 }

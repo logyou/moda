@@ -18,4 +18,6 @@ public interface UserService extends BaseService {
     Page<User> search(UserSearchRequest request);
 
     Page<User> listByStatus(UserListByStatusRequest request);
+
+    User saveUser(User user);
 }
