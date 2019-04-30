@@ -1,9 +1,3 @@
-spring:
-  cloud:
-    sentinel:
-      transport:
-        dashboard: localhost:1902
-      eager: true
 swagger:
   enable: true
   terms-of-service-url: http://localhost:1901

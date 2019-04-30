@@ -2,6 +2,10 @@ gateway:
   auth-access: false
 spring:
   cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:1902
+      eager: true
     nacos:
       discovery:
         server-addr: localhost:8848

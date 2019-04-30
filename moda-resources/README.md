@@ -25,3 +25,8 @@ moda-resources
     ```
     kibana\bin\kibana.bat
     ```
+7. Sentinel
+    ```
+    java -Dserver.port=1902 -Dcsp.sentinel.dashboard.server=localhost:1902 -Dproject.name=sentinel-dashboard -jar sentinel-dashboard.jar
+    ```
+    ```
