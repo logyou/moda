@@ -1,5 +1,6 @@
 package com.moda.gateway.exception;
 
+import com.moda.util.mapper.JsonMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
@@ -30,7 +31,9 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
     @Override
     protected Map<String, Object> getErrorAttributes(ServerRequest request, boolean includeStackTrace) {
         Throwable error = super.getError(request);
-        int status = (int) super.getErrorAttributes(request, false).getOrDefault("status", 500);
+        Map<String, Object> errorAttributes = super.getErrorAttributes(request, true);
+        logger.error(JsonMapper.toJsonStringIndent(errorAttributes));
+        int status = (int) errorAttributes.getOrDefault("status", 500);
         return response(status, request, error);
     }
 
@@ -77,13 +80,13 @@ public class JsonExceptionHandler extends DefaultErrorWebExceptionHandler {
         String message;
         switch (status) {
             case 404:
-                message = GATEWAY_TAG+"您访问的服务地址不存在，请检查后重试！";
+                message = GATEWAY_TAG + "您访问的服务地址不存在，请检查后重试！";
                 break;
             case 503:
-                message = GATEWAY_TAG+"系统维护中，服务暂时不可用！";
+                message = GATEWAY_TAG + "系统维护中，服务暂时不可用！";
                 break;
             default:
-                message = GATEWAY_TAG+"抱歉，服务器繁忙，请稍后重试！";
+                message = GATEWAY_TAG + "抱歉，服务器繁忙，请稍后重试！";
                 break;
         }
         Map<String, Object> map = new HashMap<>(3);

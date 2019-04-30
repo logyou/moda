@@ -10,8 +10,12 @@ spring:
       discovery:
         server-addr: localhost:8848
     gateway:
+      enabled: true
+      discovery:
+        locator:
+          lower-case-service-id: true
       routes:
-        - id: demo
+        - id: moda-demo-api
           uri: lb://moda-demo-api
           predicates:
             - Path=/demo/**

@@ -6,3 +6,9 @@ swagger:
     enable: false
     username: swagger
     password: swg0425
+spring:
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:1902
+      eager: true

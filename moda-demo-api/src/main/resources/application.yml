@@ -9,3 +9,8 @@ swagger:
     name: lyh
     url: http://a.com
     email: lyh@a.com
+spring:
+  cloud:
+    sentinel:
+      transport:
+        port: 3911
