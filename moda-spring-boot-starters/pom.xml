@@ -18,5 +18,6 @@
 
     <modules>
         <module>moda-swagger-spring-boot-starter</module>
+        <module>moda-exception-spring-boot-starter</module>
     </modules>
 </project>

@@ -1,5 +1,6 @@
-package com.moda.handler;
+package com.moda.exception.spring.boot.controller;
 
+import com.moda.BaseController;
 import com.moda.autoconfigure.product.ProductProperties;
 import com.moda.autoconfigure.sys.SysProperties;
 import com.moda.entity.exception.AccessException;
@@ -12,7 +13,6 @@ import com.moda.util.message.MessageSender;
 import com.moda.util.request.RequestUtils;
 import com.moda.util.system.SystemUtils;
 import com.moda.util.validation.ValidationUtils;
-import com.moda.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ import java.util.Date;
  * 全局 Controller 异常处理
  *
  * @author lyh
- * @create 2018/08/27 03:28
+ * @date 2019-5-6
  **/
 @EnableConfigurationProperties({SysProperties.class, ProductProperties.class})
 @RestControllerAdvice
@@ -41,9 +41,9 @@ public class GlobalExceptionHandler extends BaseController {
     private HttpServletRequest request;
     @Autowired(required = false)
     private MessageSender messageSender;
-    @Autowired
+    @Autowired(required = false)
     private SysProperties sysProperties;
-    @Autowired
+    @Autowired(required = false)
     private ProductProperties productProperties;
 
     @ExceptionHandler(AccessException.class)
@@ -69,19 +69,16 @@ public class GlobalExceptionHandler extends BaseController {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Result httpMessageNotReadableException(HttpMessageNotReadableException e) {
-        logger.error(e.getMessage(), e);
         return fail("缺少参数或参数格式错误！");
     }
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public Result httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        logger.error(e.getMessage(), e);
         return fail("不支持的参数类型，只支持 Content-Type 为 application/json 类型！");
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public Result httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        logger.error(e.getMessage(), e);
         return fail("不支持" + e.getMethod() + "请求方式，请使用" + StringUtils.join(e.getSupportedMethods(), ",") + "请求方式！");
     }
 

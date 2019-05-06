@@ -1,7 +1,7 @@
-package com.moda.controller;
+package com.moda.exception.spring.boot.handler;
 
-import com.moda.entity.rest.Result;
 import com.moda.BaseController;
+import com.moda.entity.rest.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
  * 全局错误处理
  *
  * @author lyh
- * @date 2019-4-23 12:21:18
+ * @date 2019-5-6
  **/
 @RestController
 @RequestMapping("/error/")
 public class ErrorController extends BaseController {
+
     @RequestMapping(value = "400")
     @ResponseStatus(HttpStatus.OK)
     public Result error400() {

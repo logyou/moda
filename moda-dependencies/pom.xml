@@ -75,6 +75,7 @@
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
         <swagger-bootstrap-ui.version>1.9.3</swagger-bootstrap-ui.version>
         <moda-swagger-spring-boot-starter.version>1.0.0.1</moda-swagger-spring-boot-starter.version>
+        <moda-exception-spring-boot-starter.version>1.0.0.1</moda-exception-spring-boot-starter.version>
         <sentinel-transport-simple-http.version>1.6.0</sentinel-transport-simple-http.version>
         <sentinel-spring-cloud-gateway-adapter.version>1.6.0</sentinel-spring-cloud-gateway-adapter.version>
     </properties>
@@ -461,6 +462,11 @@
                 <groupId>com.moda</groupId>
                 <artifactId>moda-swagger-spring-boot-starter</artifactId>
                 <version>${moda-swagger-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.moda</groupId>
+                <artifactId>moda-exception-spring-boot-starter</artifactId>
+                <version>${moda-exception-spring-boot-starter.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba.csp</groupId>
