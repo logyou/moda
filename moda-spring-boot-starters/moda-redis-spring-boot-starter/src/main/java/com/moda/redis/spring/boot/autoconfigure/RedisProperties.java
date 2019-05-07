@@ -1,4 +1,4 @@
-package com.moda.autoconfigure.redis;
+package com.moda.redis.spring.boot.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

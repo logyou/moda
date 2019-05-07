@@ -1,4 +1,4 @@
-package com.moda.util.session;
+package com.moda.session.spring.boot.autoconfigure;
 
 import com.moda.entity.exception.ServiceException;
 import com.moda.entity.rest.BaseRequest;

@@ -2,7 +2,7 @@ package com.moda;
 
 import com.moda.entity.rest.Result;
 import com.moda.entity.rest.Status;
-import com.moda.util.session.SessionContext;
+import com.moda.session.spring.boot.autoconfigure.SessionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

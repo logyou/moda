@@ -1,4 +1,4 @@
-package com.moda.autoconfigure.session;
+package com.moda.session.spring.boot.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -6,11 +6,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * 配置文件
  *
  * @author lyh
- * @version 2018-08-31 00:10:58
+ * @date 2019-05-07
  */
 @ConfigurationProperties(prefix = "session")
 public class SessionContextProperties {
-    private Integer timeout;
+    /**
+     * Session 有效期（秒）
+     */
+    private Integer timeout = 72000;
 
     public Integer getTimeout() {
         return timeout;

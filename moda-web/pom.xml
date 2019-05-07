@@ -49,6 +49,12 @@
             <groupId>com.moda</groupId>
             <artifactId>moda-autoconfigure</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.moda</groupId>
+            <artifactId>moda-session-spring-boot-starter</artifactId>
+            <version>1.0.0.1</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <repositories>

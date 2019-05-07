@@ -7,6 +7,7 @@ import com.moda.demo.request.UserListByStatusRequest;
 import com.moda.demo.request.UserSearchRequest;
 import com.moda.demo.response.UserGetSimpleResponse;
 import com.moda.demo.service.UserService;
+import com.moda.entity.annotation.AuthPermission;
 import com.moda.entity.persistence.page.Page;
 import com.moda.entity.rest.BaseRequest;
 import com.moda.entity.rest.Result;
@@ -51,8 +52,8 @@ public class UserController extends BaseController {
         return success(userService.listByStatus(request));
     }
 
-    @DenyAll
     @RequestMapping("test")
+    @AuthPermission("user.test")
     public Result test(@RequestBody BaseRequest request) {
         logger.info("test...");
         return success(request);
