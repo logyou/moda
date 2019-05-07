@@ -8,6 +8,7 @@ import com.moda.demo.request.UserSearchRequest;
 import com.moda.demo.response.UserGetSimpleResponse;
 import com.moda.demo.service.UserService;
 import com.moda.entity.persistence.page.Page;
+import com.moda.entity.rest.BaseRequest;
 import com.moda.entity.rest.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.security.DenyAll;
 
 /**
  * Controller
@@ -46,5 +49,12 @@ public class UserController extends BaseController {
     @ApiOperation(value = "用户信息", notes = "根据状态搜索用户信息")
     public Result<Page<User>> listByStatus(@RequestBody UserListByStatusRequest request) {
         return success(userService.listByStatus(request));
+    }
+
+    @DenyAll
+    @RequestMapping("test")
+    public Result test(@RequestBody BaseRequest request) {
+        logger.info("test...");
+        return success(request);
     }
 }
