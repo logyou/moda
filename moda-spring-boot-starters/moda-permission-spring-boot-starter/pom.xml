@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>moda-session-spring-boot-starter</artifactId>
+    <artifactId>moda-permission-spring-boot-starter</artifactId>
     <version>1.0.0.1</version>
     <packaging>jar</packaging>
-    <name>moda-session-spring-boot-starter</name>
+    <name>moda-permission-spring-boot-starter</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,15 +40,23 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.moda</groupId>
+            <artifactId>moda-entity</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.moda</groupId>
             <artifactId>moda-util</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-            <optional>true</optional>
+            <groupId>com.moda</groupId>
+            <artifactId>moda-session-spring-boot-starter</artifactId>
+            <version>1.0.0.1</version>
+            <scope>compile</scope>
         </dependency>
-
     </dependencies>
 
     <build>

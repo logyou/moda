@@ -21,5 +21,6 @@
         <module>moda-exception-spring-boot-starter</module>
         <module>moda-session-spring-boot-starter</module>
         <module>moda-redis-spring-boot-starter</module>
+        <module>moda-permission-spring-boot-starter</module>
     </modules>
 </project>

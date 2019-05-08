@@ -6,25 +6,31 @@ import com.moda.entity.session.CurrentUser;
 import com.moda.util.cache.JedisUtils;
 import com.moda.util.lang.StringUtils;
 import com.moda.util.mapper.JsonMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用于维护 Session 上下文信息
  *
  * @author lyh
- * @create 2018-9-3
+ * @date 2019-5-8
  **/
 public class SessionContext {
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
     /**
      * Session 有效期（秒）
+     * 默认7200秒，即2小时
      */
-    private Integer sessionTimeout = 72000;
+    private Integer sessionTimeout = 7200;
     /**
      * Redis 前缀
      */
-    private String redisKeyPrefix = "redisKeyPrefix";
+    private String redisKeyPrefix = "com:moda";
     /**
      * Session 前缀
      */
@@ -65,7 +71,7 @@ public class SessionContext {
             return null;
         }
         String key = getUserSessionPrefix() + accessToken;
-        String json = JedisUtils.getMapField(key, CURRENT_USER);
+        String json = (String) stringRedisTemplate.opsForHash().get(key, CURRENT_USER);
         if (StringUtils.isEmpty(json)) {
             return null;
         }
@@ -159,7 +165,8 @@ public class SessionContext {
             String key = getUserSessionPrefix() + user.getAccessToken();
             Map<String, String> map = new HashMap<>(1);
             map.put(CURRENT_USER, JsonMapper.toJsonString(user));
-            JedisUtils.setMap(key, map, getSessionTimeout());
+            stringRedisTemplate.opsForHash().putAll(key, map);
+            stringRedisTemplate.expire(key, getSessionTimeout(), TimeUnit.SECONDS);
         }
     }
 
@@ -170,7 +177,7 @@ public class SessionContext {
      */
     public void clearCurrentUser(String accessToken) {
         if (StringUtils.isNotEmpty(accessToken)) {
-            JedisUtils.del(getUserSessionPrefix() + accessToken);
+            stringRedisTemplate.delete(getUserSessionPrefix() + accessToken);
         }
     }
 
@@ -192,7 +199,7 @@ public class SessionContext {
      */
     public void refreshCurrentUser(String accessToken) {
         if (StringUtils.isNotEmpty(accessToken)) {
-            JedisUtils.expire(getUserSessionPrefix() + accessToken, getSessionTimeout());
+            stringRedisTemplate.expire(getUserSessionPrefix() + accessToken, getSessionTimeout(), TimeUnit.SECONDS);
         }
     }
 
@@ -225,7 +232,7 @@ public class SessionContext {
             throw new ServiceException("字段名[" + field + "]为保留字段，不能使用");
         }
         String key = getUserSessionPrefix() + accessToken;
-        JedisUtils.setMapObjectField(key, field, JsonMapper.toJsonString(value));
+        stringRedisTemplate.opsForHash().put(key, field, JsonMapper.toJsonString(value));
     }
 
     /**
@@ -245,7 +252,7 @@ public class SessionContext {
             throw new ServiceException("field 不能为空");
         }
         String key = getUserSessionPrefix() + accessToken;
-        String value = JedisUtils.getMapField(key, field);
+        String value = (String) stringRedisTemplate.opsForHash().get(key, field);
         return JsonMapper.parseObject(value, t);
     }
 

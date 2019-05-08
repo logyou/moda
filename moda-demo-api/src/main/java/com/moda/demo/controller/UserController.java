@@ -11,15 +11,16 @@ import com.moda.entity.annotation.AuthPermission;
 import com.moda.entity.persistence.page.Page;
 import com.moda.entity.rest.BaseRequest;
 import com.moda.entity.rest.Result;
+import com.moda.entity.session.CurrentUser;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.security.DenyAll;
 
 /**
  * Controller
@@ -33,6 +34,8 @@ import javax.annotation.security.DenyAll;
 public class UserController extends BaseController {
     @Reference
     private UserService userService;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
     @RequestMapping("getSimple")
     @ApiOperation(value = "用户信息", notes = "根据输入用户ID查询用户基本信息")
@@ -56,6 +59,24 @@ public class UserController extends BaseController {
     @AuthPermission("user.test")
     public Result test(@RequestBody BaseRequest request) {
         logger.info("test...");
-        return success(request);
+        return success(sessionContext.getCurrentUser(request));
+    }
+
+    @RequestMapping("login")
+    public Result login(@RequestBody BaseRequest request) {
+        logger.info("test...");
+        CurrentUser currentUser = new CurrentUser();
+        currentUser.setAccessToken("abc");
+        currentUser.setId(1);
+        currentUser.setUsername("lyh");
+        sessionContext.setCurrentUser(currentUser);
+        return success(currentUser);
+    }
+
+    @RequestMapping("a")
+    public Result a(@RequestBody BaseRequest request) {
+        stringRedisTemplate.opsForValue().set("stringRedisTemplate", request.getAccessToken());
+        String key = "com:devkeep:user:session:01afb99dd4d24855a65dc201d261d07d";
+        return success(stringRedisTemplate.opsForHash().get(key, "selectedHid"));
     }
 }
