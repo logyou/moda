@@ -13,7 +13,7 @@ public class ExceptionHandler {
     private String productName;
     private String env;
     private String notifyMailAddress;
-    @Autowired
+    @Autowired(required = false)
     private MessageSender messageSender;
 
     public ExceptionHandler(String productName, String env, String notifyMailAddress) {

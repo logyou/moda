@@ -1,10 +1,15 @@
-redis:
-  prefix: com:moda
-  host: localhost
-  port: 6379
-  timeout: 2000
-  password: 123456
-  database: 0
-  maxIdle: 300
-  maxTotal: 60000
-  testOnBorrow: true
+sys:
+  redis-prefix: com:moda
+spring:
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: 123456
+    timeout: 6000ms
+    lettuce:
+      pool:
+        max-active: 1000
+        max-wait: -1ms
+        max-idle: 10
+        min-idle: 5

@@ -1,17 +1,16 @@
 package com.moda.session.spring.boot.autoconfigure;
 
+import com.moda.autoconfigure.sys.SysProperties;
 import com.moda.entity.exception.ServiceException;
 import com.moda.entity.rest.BaseRequest;
 import com.moda.entity.session.CurrentUser;
-import com.moda.util.cache.JedisUtils;
+import com.moda.redis.spring.boot.autoconfigure.RedisClient;
 import com.moda.util.lang.StringUtils;
 import com.moda.util.mapper.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 用于维护 Session 上下文信息
@@ -21,43 +20,31 @@ import java.util.concurrent.TimeUnit;
  **/
 public class SessionContext {
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-    /**
-     * Session 有效期（秒）
-     * 默认7200秒，即2小时
-     */
-    private Integer sessionTimeout = 7200;
-    /**
-     * Redis 前缀
-     */
-    private String redisKeyPrefix = "com:moda";
+    private SessionContextProperties sessionContextProperties;
+    @Autowired
+    private SysProperties sysProperties;
+    @Autowired
+    private RedisClient redisClient;
     /**
      * Session 前缀
      */
-    private static final String USER_SESSION_PREFIX = ":user:session:";
+    private static final String USER_SESSION_PREFIX = "user:session:";
     /**
      * 当前登录信息的键
      */
     private static final String CURRENT_USER = "currentUser";
 
-    public Integer getSessionTimeout() {
-        return sessionTimeout;
-    }
-
-    public void setSessionTimeout(Integer sessionTimeout) {
-        this.sessionTimeout = sessionTimeout;
-    }
-
-    public String getRedisKeyPrefix() {
-        return redisKeyPrefix;
-    }
-
-    public void setRedisKeyPrefix(String redisKeyPrefix) {
-        this.redisKeyPrefix = redisKeyPrefix;
-    }
-
-    public String getUserSessionPrefix() {
-        return getRedisKeyPrefix() + USER_SESSION_PREFIX;
+    /**
+     * 获取用户 Session 键名前缀
+     *
+     * @return 键名前缀
+     */
+    private String getUserSessionPrefix() {
+        if (StringUtils.isEmpty(sysProperties.getRedisPrefix())) {
+            return USER_SESSION_PREFIX;
+        } else {
+            return sysProperties.getRedisPrefix() + ":" + USER_SESSION_PREFIX;
+        }
     }
 
     /**
@@ -71,11 +58,7 @@ public class SessionContext {
             return null;
         }
         String key = getUserSessionPrefix() + accessToken;
-        String json = (String) stringRedisTemplate.opsForHash().get(key, CURRENT_USER);
-        if (StringUtils.isEmpty(json)) {
-            return null;
-        }
-        return JsonMapper.parseObject(json, CurrentUser.class);
+        return redisClient.getHashObjectField(key, CURRENT_USER, CurrentUser.class);
     }
 
     /**
@@ -165,8 +148,7 @@ public class SessionContext {
             String key = getUserSessionPrefix() + user.getAccessToken();
             Map<String, String> map = new HashMap<>(1);
             map.put(CURRENT_USER, JsonMapper.toJsonString(user));
-            stringRedisTemplate.opsForHash().putAll(key, map);
-            stringRedisTemplate.expire(key, getSessionTimeout(), TimeUnit.SECONDS);
+            redisClient.setHashObject(key, map, sessionContextProperties.getTimeout());
         }
     }
 
@@ -177,7 +159,7 @@ public class SessionContext {
      */
     public void clearCurrentUser(String accessToken) {
         if (StringUtils.isNotEmpty(accessToken)) {
-            stringRedisTemplate.delete(getUserSessionPrefix() + accessToken);
+            redisClient.delete(getUserSessionPrefix() + accessToken);
         }
     }
 
@@ -199,7 +181,7 @@ public class SessionContext {
      */
     public void refreshCurrentUser(String accessToken) {
         if (StringUtils.isNotEmpty(accessToken)) {
-            stringRedisTemplate.expire(getUserSessionPrefix() + accessToken, getSessionTimeout(), TimeUnit.SECONDS);
+            redisClient.expire(getUserSessionPrefix() + accessToken, sessionContextProperties.getTimeout());
         }
     }
 
@@ -232,7 +214,7 @@ public class SessionContext {
             throw new ServiceException("字段名[" + field + "]为保留字段，不能使用");
         }
         String key = getUserSessionPrefix() + accessToken;
-        stringRedisTemplate.opsForHash().put(key, field, JsonMapper.toJsonString(value));
+        redisClient.setHashObjectField(key, field, value);
     }
 
     /**
@@ -252,8 +234,7 @@ public class SessionContext {
             throw new ServiceException("field 不能为空");
         }
         String key = getUserSessionPrefix() + accessToken;
-        String value = (String) stringRedisTemplate.opsForHash().get(key, field);
-        return JsonMapper.parseObject(value, t);
+        return redisClient.getHashObjectField(key, field, t);
     }
 
     /**
@@ -264,6 +245,6 @@ public class SessionContext {
      */
     public void removeAttribute(String accessToken, String field) {
         String key = getUserSessionPrefix() + accessToken;
-        JedisUtils.delMapField(key, field);
+        redisClient.deleteHashField(key, field);
     }
 }

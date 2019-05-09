@@ -40,12 +40,16 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.moda</groupId>
-            <artifactId>moda-util</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.moda</groupId>
+            <artifactId>moda-util</artifactId>
         </dependency>
     </dependencies>
 

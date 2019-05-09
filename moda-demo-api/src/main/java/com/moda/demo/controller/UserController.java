@@ -66,7 +66,7 @@ public class UserController extends BaseController {
     public Result login(@RequestBody BaseRequest request) {
         logger.info("test...");
         CurrentUser currentUser = new CurrentUser();
-        currentUser.setAccessToken("abc");
+        currentUser.setAccessToken(request.getAccessToken());
         currentUser.setId(1);
         currentUser.setUsername("lyh");
         sessionContext.setCurrentUser(currentUser);

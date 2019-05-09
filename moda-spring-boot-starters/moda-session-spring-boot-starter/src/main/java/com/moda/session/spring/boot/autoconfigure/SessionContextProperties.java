@@ -3,7 +3,7 @@ package com.moda.session.spring.boot.autoconfigure;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 配置文件
+ * Session 配置文件
  *
  * @author lyh
  * @date 2019-05-07
@@ -12,14 +12,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class SessionContextProperties {
     /**
      * Session 有效期（秒）
+     * 默认7200秒，即2小时
      */
-    private Integer timeout = 72000;
+    private Long timeout = 72000L;
 
-    public Integer getTimeout() {
+    public Long getTimeout() {
         return timeout;
     }
 
-    public void setTimeout(Integer timeout) {
+    public void setTimeout(Long timeout) {
         this.timeout = timeout;
     }
 }

@@ -35,6 +35,10 @@ public class SysProperties {
      * 通知邮件地址（多个以逗号隔开）
      */
     private String notifyMailAddress;
+    /**
+     * Redis前缀
+     */
+    private String redisPrefix;
 
     public String getVersion() {
         return version;
@@ -82,5 +86,13 @@ public class SysProperties {
 
     public void setNotifyMailAddress(String notifyMailAddress) {
         this.notifyMailAddress = notifyMailAddress;
+    }
+
+    public String getRedisPrefix() {
+        return redisPrefix;
+    }
+
+    public void setRedisPrefix(String redisPrefix) {
+        this.redisPrefix = redisPrefix;
     }
 }

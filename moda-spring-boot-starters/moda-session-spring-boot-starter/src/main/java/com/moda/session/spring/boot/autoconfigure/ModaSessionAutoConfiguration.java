@@ -1,8 +1,8 @@
 package com.moda.session.spring.boot.autoconfigure;
 
+import com.moda.autoconfigure.sys.SysProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,17 +14,13 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019-5-7
  */
 @Configuration
-@EnableConfigurationProperties({SessionContextProperties.class})
+@EnableConfigurationProperties({SessionContextProperties.class, SysProperties.class})
 public class ModaSessionAutoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ModaSessionAutoConfiguration.class);
-    @Autowired
-    private SessionContextProperties sessionContextProperties;
 
     @Bean
     public SessionContext sessionContext() {
         logger.info("Init SessionContext...");
-        SessionContext sessionContext = new SessionContext();
-        sessionContext.setSessionTimeout(sessionContextProperties.getTimeout());
-        return sessionContext;
+        return new SessionContext();
     }
 }

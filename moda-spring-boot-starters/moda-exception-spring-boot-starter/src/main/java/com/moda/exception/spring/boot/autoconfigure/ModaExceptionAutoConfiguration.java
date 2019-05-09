@@ -1,10 +1,15 @@
 package com.moda.exception.spring.boot.autoconfigure;
 
+import com.moda.autoconfigure.product.ProductProperties;
+import com.moda.autoconfigure.sys.SysProperties;
 import com.moda.exception.spring.boot.config.MyWebServerFactoryCustomizer;
 import com.moda.exception.spring.boot.controller.GlobalExceptionHandler;
 import com.moda.exception.spring.boot.handler.ErrorController;
+import com.moda.util.exception.ExceptionHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,8 +21,13 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019-5-6
  */
 @Configuration
+@EnableConfigurationProperties({ProductProperties.class, SysProperties.class})
 public class ModaExceptionAutoConfiguration {
     private static final Logger logger = LoggerFactory.getLogger(ModaExceptionAutoConfiguration.class);
+    @Autowired
+    private ProductProperties productProperties;
+    @Autowired
+    private SysProperties sysProperties;
 
     @Bean
     public MyWebServerFactoryCustomizer myWebServerFactoryCustomizer() {
@@ -35,5 +45,13 @@ public class ModaExceptionAutoConfiguration {
     public ErrorController errorController() {
         logger.info("Init ModaExceptionAutoConfiguration.errorController...");
         return new ErrorController();
+    }
+
+    @Bean
+    public ExceptionHandler exceptionHandler() {
+        logger.debug("Init ExceptionHandler...");
+        return new ExceptionHandler(productProperties.getName(),
+                sysProperties.getEnv(),
+                sysProperties.getNotifyMailAddress());
     }
 }
