@@ -1,11 +1,12 @@
 package com.moda.gateway.util;
 
-import com.moda.autoconfigure.redis.RedisProperties;
+import com.moda.autoconfigure.sys.SysProperties;
 import com.moda.entity.app.ApplicationAccount;
 import com.moda.entity.enums.sys.YesOrNo;
 import com.moda.entity.rest.BaseRequest;
 import com.moda.entity.rest.Result;
 import com.moda.entity.rest.Status;
+import com.moda.redis.spring.boot.autoconfigure.RedisClient;
 import com.moda.util.cache.JedisUtils;
 import com.moda.util.date.DateUtils;
 import com.moda.util.lang.StringUtils;
@@ -14,6 +15,7 @@ import com.moda.util.security.Md5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -23,6 +25,7 @@ import java.util.Date;
  * @date 2019-04-22 19:06
  **/
 @Component
+@EnableConfigurationProperties(SysProperties.class)
 public class AuthAccessUtils {
     private static Logger logger = LoggerFactory.getLogger(AuthAccessUtils.class);
     /**
@@ -32,7 +35,9 @@ public class AuthAccessUtils {
     private final static String APPLICATION_ACCOUNT = ":application:account:";
     private static ApplicationAccount account;
     @Autowired
-    private RedisProperties redisProperties;
+    private SysProperties sysProperties;
+    @Autowired
+    private RedisClient redisClient;
 
     static {
         account = new ApplicationAccount();
@@ -74,7 +79,7 @@ public class AuthAccessUtils {
         //TODO 没有值时从Redis获取
         if (account == null) {
             //获取缓存中的应用账号
-            String json = JedisUtils.get(redisProperties.getPrefix() + APPLICATION_ACCOUNT + entity.getAppId());
+            String json = redisClient.get(sysProperties.getRedisPrefix() + APPLICATION_ACCOUNT + entity.getAppId());
             account = JsonMapper.parseObject(json, ApplicationAccount.class);
         }
 

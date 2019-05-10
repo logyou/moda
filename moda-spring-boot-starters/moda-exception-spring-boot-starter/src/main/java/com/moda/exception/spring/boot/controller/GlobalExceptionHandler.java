@@ -110,7 +110,7 @@ public class GlobalExceptionHandler extends BaseController {
             errorMessage.setHostName(SystemUtils.getHostName());
 
             //发送错误信息
-            messageSender.sendError(errorMessage);
+//            messageSender.sendError(errorMessage);
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }

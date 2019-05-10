@@ -85,6 +85,10 @@
             <groupId>com.github.danielwegener</groupId>
             <artifactId>logback-kafka-appender</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.moda</groupId>
+            <artifactId>moda-redis-spring-boot-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <repositories>
