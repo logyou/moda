@@ -33,7 +33,6 @@ public class AuthPermissionProvider implements AuthenticationProvider {
 
     @Override
     public boolean authenticate(HttpServletRequest request, Object handler) {
-        logger.info("authenticate...");
         if (handler instanceof HandlerMethod) {
             Method method = ((HandlerMethod) handler).getMethod();
 

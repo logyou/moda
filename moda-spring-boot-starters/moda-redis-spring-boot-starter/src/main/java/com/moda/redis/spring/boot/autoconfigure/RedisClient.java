@@ -9,7 +9,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Redis 客户端操作
+ * Redis 客户端操作类
+ * 基于 Spring Data Redis 的 StringRedisTemplate 封装
  *
  * @author lyh
  * @date 2019-05-09
@@ -49,20 +50,52 @@ public class RedisClient {
         return stringRedisTemplate.delete(key);
     }
 
+    /**
+     * 设置字符串键值
+     *
+     * @param key   键名
+     * @param value 键值
+     */
     public void set(String key, String value) {
         stringRedisTemplate.opsForValue().set(key, value);
     }
 
+    /**
+     * 设置字符串键值
+     *
+     * @param key     键名
+     * @param value   键值
+     * @param timeout 失效时间（单位：秒）
+     */
+    public void set(String key, String value, long timeout) {
+        stringRedisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 获取字符串键值
+     *
+     * @param key 键名
+     * @return 键值
+     */
     public String get(String key) {
         return stringRedisTemplate.opsForValue().get(key);
     }
 
-    public void set(String key, String value, long timeout) {
-        stringRedisTemplate.opsForValue().set(key, value, timeout);
+    /**
+     * 设置 Hash 中字段的字符串类型的值
+     * 对应获取方法 getHashStringField
+     *
+     * @param key   键名
+     * @param field 字段
+     * @param value 字符串类型值
+     */
+    public void setHashStringField(String key, String field, String value) {
+        stringRedisTemplate.opsForHash().put(key, field, value);
     }
 
     /**
      * 获取 Hash 中指定字段的字符串类型的值
+     * 对应设置方法 setHashStringField
      *
      * @param key   键名
      * @param field 字段
@@ -73,13 +106,26 @@ public class RedisClient {
     }
 
     /**
+     * 设置 Hash 中字段的对象类型的值
+     * 对应获取方法 getHashObjectField
+     *
+     * @param key   键名
+     * @param field 字段
+     * @param value 对象类型值
+     */
+    public void setHashObjectField(String key, String field, Object value) {
+        stringRedisTemplate.opsForHash().put(key, field, JsonMapper.toJsonString(value));
+    }
+
+    /**
      * 获取 Hash 中指定字段的对象类型的值
+     * 对应设置方法 setHashObjectField
      *
      * @param key   键名
      * @param field 字段
      * @param t     类型
      * @param <T>   对象
-     * @return 对象类型数据
+     * @return 对象类型值
      */
     public <T> T getHashObjectField(String key, String field, Class<T> t) {
         String json = (String) stringRedisTemplate.opsForHash().get(key, field);
@@ -96,31 +142,11 @@ public class RedisClient {
      * @param map     MAP
      * @param timeout 超时时间（单位：秒）
      */
-    public void setHashObject(String key, Map<String, String> map, long timeout) {
-        stringRedisTemplate.opsForHash().putAll(key, map);
+    public void setHashObject(String key, Map<String, Object> map, long timeout) {
+        for (Map.Entry entry : map.entrySet()) {
+            setHashObjectField(key, (String) entry.getKey(), map.get(entry.getKey()));
+        }
         stringRedisTemplate.expire(key, timeout, TimeUnit.SECONDS);
-    }
-
-    /**
-     * 设置 Hash 字段的值
-     *
-     * @param key   键名
-     * @param field 字段
-     * @param value 字符串类型值
-     */
-    public void setHashStringField(String key, String field, String value) {
-        stringRedisTemplate.opsForHash().put(key, field, value);
-    }
-
-    /**
-     * 设置 Hash 字段的值
-     *
-     * @param key   键名
-     * @param field 字段
-     * @param value 对象类型值
-     */
-    public void setHashObjectField(String key, String field, Object value) {
-        stringRedisTemplate.opsForHash().put(key, field, JsonMapper.toJsonString(value));
     }
 
     /**

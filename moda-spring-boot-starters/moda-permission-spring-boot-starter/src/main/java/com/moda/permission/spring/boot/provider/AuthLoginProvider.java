@@ -6,8 +6,6 @@ import com.moda.entity.rest.BaseRequest;
 import com.moda.entity.rest.Status;
 import com.moda.session.spring.boot.autoconfigure.SessionContext;
 import com.moda.util.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 
@@ -21,13 +19,11 @@ import java.lang.reflect.Method;
  * @date 2019-5-8
  **/
 public class AuthLoginProvider implements AuthenticationProvider {
-    private Logger logger = LoggerFactory.getLogger(AuthLoginProvider.class);
     @Autowired
     private SessionContext sessionContext;
 
     @Override
     public boolean authenticate(HttpServletRequest request, Object handler) {
-        logger.info("authenticate...");
         if (handler instanceof HandlerMethod) {
             Method method = ((HandlerMethod) handler).getMethod();
 

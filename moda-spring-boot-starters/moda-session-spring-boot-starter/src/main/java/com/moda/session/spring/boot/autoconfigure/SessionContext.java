@@ -1,12 +1,11 @@
 package com.moda.session.spring.boot.autoconfigure;
 
 import com.moda.autoconfigure.sys.SysProperties;
-import com.moda.entity.exception.ServiceException;
 import com.moda.entity.rest.BaseRequest;
 import com.moda.entity.session.CurrentUser;
 import com.moda.redis.spring.boot.autoconfigure.RedisClient;
+import com.moda.util.exception.ExceptionUtils;
 import com.moda.util.lang.StringUtils;
-import com.moda.util.mapper.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
@@ -48,6 +47,16 @@ public class SessionContext {
     }
 
     /**
+     * 获取用户 Session 键名
+     *
+     * @param accessToken 用户凭证
+     * @return 键名
+     */
+    private String getUserSessionKey(String accessToken) {
+        return getUserSessionPrefix() + accessToken;
+    }
+
+    /**
      * 根据 access token 获取用户信息
      *
      * @param accessToken 访问凭证
@@ -57,8 +66,7 @@ public class SessionContext {
         if (StringUtils.isEmpty(accessToken)) {
             return null;
         }
-        String key = getUserSessionPrefix() + accessToken;
-        return redisClient.getHashObjectField(key, CURRENT_USER, CurrentUser.class);
+        return redisClient.getHashObjectField(getUserSessionKey(accessToken), CURRENT_USER, CurrentUser.class);
     }
 
     /**
@@ -144,12 +152,12 @@ public class SessionContext {
      * @param user 用户信息
      */
     public void setCurrentUser(CurrentUser user) {
-        if (StringUtils.isNotEmpty(user.getAccessToken())) {
-            String key = getUserSessionPrefix() + user.getAccessToken();
-            Map<String, String> map = new HashMap<>(1);
-            map.put(CURRENT_USER, JsonMapper.toJsonString(user));
-            redisClient.setHashObject(key, map, sessionContextProperties.getTimeout());
+        if (StringUtils.isEmpty(user.getAccessToken())) {
+            ExceptionUtils.throwServiceException("accessToken 不能为空");
         }
+        Map<String, Object> map = new HashMap<>(1);
+        map.put(CURRENT_USER, user);
+        redisClient.setHashObject(getUserSessionKey(user.getAccessToken()), map, sessionContextProperties.getTimeout());
     }
 
     /**
@@ -159,7 +167,7 @@ public class SessionContext {
      */
     public void clearCurrentUser(String accessToken) {
         if (StringUtils.isNotEmpty(accessToken)) {
-            redisClient.delete(getUserSessionPrefix() + accessToken);
+            redisClient.delete(getUserSessionKey(accessToken));
         }
     }
 
@@ -180,8 +188,11 @@ public class SessionContext {
      * @param accessToken 访问凭证
      */
     public void refreshCurrentUser(String accessToken) {
+        if (StringUtils.isBlank(accessToken)) {
+            ExceptionUtils.throwServiceException("accessToken 不能为空");
+        }
         if (StringUtils.isNotEmpty(accessToken)) {
-            redisClient.expire(getUserSessionPrefix() + accessToken, sessionContextProperties.getTimeout());
+            redisClient.expire(getUserSessionKey(accessToken), sessionContextProperties.getTimeout());
         }
     }
 
@@ -205,16 +216,29 @@ public class SessionContext {
      */
     public void setAttribute(String accessToken, String field, Object value) {
         if (StringUtils.isBlank(accessToken)) {
-            throw new ServiceException("accessToken 不能为空");
+            ExceptionUtils.throwServiceException("accessToken 不能为空");
         }
         if (StringUtils.isBlank(field)) {
-            throw new ServiceException("field 不能为空");
+            ExceptionUtils.throwServiceException("field 不能为空");
         }
         if (CURRENT_USER.equalsIgnoreCase(field)) {
-            throw new ServiceException("字段名[" + field + "]为保留字段，不能使用");
+            ExceptionUtils.throwServiceException("字段名[" + field + "]为保留字段，不能使用");
         }
-        String key = getUserSessionPrefix() + accessToken;
-        redisClient.setHashObjectField(key, field, value);
+        redisClient.setHashObjectField(getUserSessionKey(accessToken), field, value);
+    }
+
+    /**
+     * 设置属性
+     *
+     * @param param 参数
+     * @param field 字段
+     * @param value 值
+     */
+    public void setAttribute(BaseRequest param, String field, Object value) {
+        if (param == null) {
+            ExceptionUtils.throwServiceException("param 不能为空");
+        }
+        setAttribute(param.getAccessToken(), field, value);
     }
 
     /**
@@ -228,13 +252,28 @@ public class SessionContext {
      */
     public <T> T getAttribute(String accessToken, String field, Class<T> t) {
         if (StringUtils.isBlank(accessToken)) {
-            throw new ServiceException("accessToken 不能为空");
+            ExceptionUtils.throwServiceException("accessToken 不能为空");
         }
         if (StringUtils.isBlank(field)) {
-            throw new ServiceException("field 不能为空");
+            ExceptionUtils.throwServiceException("field 不能为空");
         }
-        String key = getUserSessionPrefix() + accessToken;
-        return redisClient.getHashObjectField(key, field, t);
+        return redisClient.getHashObjectField(getUserSessionKey(accessToken), field, t);
+    }
+
+    /**
+     * 获取属性
+     *
+     * @param param 参数
+     * @param field 字段
+     * @param t     类
+     * @param <T>   值类型
+     * @return T
+     */
+    public <T> T getAttribute(BaseRequest param, String field, Class<T> t) {
+        if (param == null) {
+            ExceptionUtils.throwServiceException("param 不能为空");
+        }
+        return getAttribute(param.getAccessToken(), field, t);
     }
 
     /**
@@ -244,7 +283,25 @@ public class SessionContext {
      * @param field       字段
      */
     public void removeAttribute(String accessToken, String field) {
-        String key = getUserSessionPrefix() + accessToken;
-        redisClient.deleteHashField(key, field);
+        if (StringUtils.isBlank(accessToken)) {
+            ExceptionUtils.throwServiceException("accessToken 不能为空");
+        }
+        if (StringUtils.isBlank(field)) {
+            ExceptionUtils.throwServiceException("field 不能为空");
+        }
+        redisClient.deleteHashField(getUserSessionKey(accessToken), field);
+    }
+
+    /**
+     * 删除指定字段值
+     *
+     * @param param 参数
+     * @param field 字段
+     */
+    public void removeAttribute(BaseRequest param, String field) {
+        if (param == null) {
+            ExceptionUtils.throwServiceException("param 不能为空");
+        }
+        removeAttribute(param.getAccessToken(), field);
     }
 }
