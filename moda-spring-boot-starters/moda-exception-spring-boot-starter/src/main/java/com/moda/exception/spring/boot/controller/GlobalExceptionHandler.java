@@ -1,6 +1,5 @@
 package com.moda.exception.spring.boot.controller;
 
-import com.moda.BaseController;
 import com.moda.autoconfigure.product.ProductProperties;
 import com.moda.autoconfigure.sys.SysProperties;
 import com.moda.entity.exception.AccessException;
@@ -13,6 +12,7 @@ import com.moda.util.message.MessageSender;
 import com.moda.util.request.RequestUtils;
 import com.moda.util.system.SystemUtils;
 import com.moda.util.validation.ValidationUtils;
+import com.moda.web.spring.boot.controller.BaseController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.moda;
+package com.moda.web.spring.boot.controller;
 
 import com.moda.entity.rest.Result;
 import com.moda.entity.rest.Status;

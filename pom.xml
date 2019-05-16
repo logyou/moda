@@ -30,5 +30,6 @@
         <module>moda-generator</module>
         <module>moda-demo-service</module>
         <module>moda-demo-api</module>
+        <module>moda-monitor</module>
     </modules>
 </project>

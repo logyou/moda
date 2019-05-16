@@ -1,5 +1,5 @@
 server:
-  port: 20001
+  port: 23001
 management:
   server:
-    port: 20002
+    port: 23002

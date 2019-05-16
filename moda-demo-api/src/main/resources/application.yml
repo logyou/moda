@@ -1,5 +1,5 @@
 server:
-  port: 1911
+  port: 21001
 swagger:
   title: 演示接口
   description: 测试一下
@@ -14,3 +14,6 @@ spring:
     sentinel:
       transport:
         port: 3911
+management:
+  server:
+    port: 21002

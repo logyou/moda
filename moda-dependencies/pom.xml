@@ -15,7 +15,6 @@
         <encoding>UTF-8</encoding>
         <moda-entity.version>1.0.0.1</moda-entity.version>
         <moda-util.version>1.0.0.1</moda-util.version>
-        <moda-web.version>1.0.0.1</moda-web.version>
         <moda-autoconfigure.version>1.0.0.1</moda-autoconfigure.version>
         <spring.version>5.1.5.RELEASE</spring.version>
         <spring-cloud-dependencies.version>Greenwich.SR1</spring-cloud-dependencies.version>
@@ -79,8 +78,10 @@
         <moda-permission-spring-boot-starter.version>1.0.0.1</moda-permission-spring-boot-starter.version>
         <moda-redis-spring-boot-starter.version>1.0.0.1</moda-redis-spring-boot-starter.version>
         <moda-session-spring-boot-starter.version>1.0.0.1</moda-session-spring-boot-starter.version>
+        <moda-web-spring-boot-starter.version>1.0.0.1</moda-web-spring-boot-starter.version>
         <sentinel-transport-simple-http.version>1.6.0</sentinel-transport-simple-http.version>
         <sentinel-spring-cloud-gateway-adapter.version>1.6.0</sentinel-spring-cloud-gateway-adapter.version>
+        <micrometer-registry-prometheus.version>1.1.4</micrometer-registry-prometheus.version>
     </properties>
 
     <dependencyManagement>
@@ -325,11 +326,6 @@
             </dependency>
             <dependency>
                 <groupId>com.moda</groupId>
-                <artifactId>moda-web</artifactId>
-                <version>${moda-web.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.moda</groupId>
                 <artifactId>moda-util</artifactId>
                 <version>${moda-util.version}</version>
             </dependency>
@@ -487,6 +483,11 @@
                 <version>${moda-session-spring-boot-starter.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.moda</groupId>
+                <artifactId>moda-web-spring-boot-starter</artifactId>
+                <version>${moda-web-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba.csp</groupId>
                 <artifactId>sentinel-transport-simple-http</artifactId>
                 <version>${sentinel-transport-simple-http.version}</version>
@@ -495,6 +496,11 @@
                 <groupId>com.alibaba.csp</groupId>
                 <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
                 <version>${sentinel-spring-cloud-gateway-adapter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>${micrometer-registry-prometheus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

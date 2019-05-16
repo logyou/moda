@@ -1,6 +1,5 @@
 package com.moda.demo.controller;
 
-import com.moda.BaseController;
 import com.moda.demo.entity.User;
 import com.moda.demo.request.UserGetSimpleRequest;
 import com.moda.demo.request.UserListByStatusRequest;
@@ -12,6 +11,7 @@ import com.moda.entity.persistence.page.Page;
 import com.moda.entity.rest.BaseRequest;
 import com.moda.entity.rest.Result;
 import com.moda.entity.session.CurrentUser;
+import com.moda.web.spring.boot.controller.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.Reference;
@@ -71,12 +71,5 @@ public class UserController extends BaseController {
         currentUser.setUsername("lyh");
         sessionContext.setCurrentUser(currentUser);
         return success(currentUser);
-    }
-
-    @RequestMapping("a")
-    public Result a(@RequestBody BaseRequest request) {
-        stringRedisTemplate.opsForValue().set("stringRedisTemplate", request.getAccessToken());
-        String key = "com:devkeep:user:session:01afb99dd4d24855a65dc201d261d07d";
-        return success(stringRedisTemplate.opsForHash().get(key, "selectedHid"));
     }
 }

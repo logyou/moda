@@ -1,7 +1,7 @@
 package com.moda.exception.spring.boot.handler;
 
-import com.moda.BaseController;
 import com.moda.entity.rest.Result;
+import com.moda.web.spring.boot.controller.BaseController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;

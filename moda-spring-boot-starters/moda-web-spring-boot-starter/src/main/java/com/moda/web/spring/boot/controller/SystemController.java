@@ -1,9 +1,8 @@
-package com.moda.controller;
+package com.moda.web.spring.boot.controller;
 
 import com.moda.autoconfigure.product.ProductProperties;
 import com.moda.entity.rest.Result;
 import com.moda.util.date.DateUtils;
-import com.moda.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -7,7 +7,6 @@ import com.moda.entity.rest.BaseRequest;
 import com.moda.entity.rest.Result;
 import com.moda.entity.rest.Status;
 import com.moda.redis.spring.boot.autoconfigure.RedisClient;
-import com.moda.util.cache.JedisUtils;
 import com.moda.util.date.DateUtils;
 import com.moda.util.lang.StringUtils;
 import com.moda.util.mapper.JsonMapper;

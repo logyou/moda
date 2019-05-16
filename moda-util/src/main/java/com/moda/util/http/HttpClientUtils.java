@@ -36,7 +36,7 @@ public class HttpClientUtils {
         return nameValuePairs;
     }
 
-    public static String get(String spec, Map<String, Object> params, Map<String, String> headers) {
+    public static String get(String spec, Map<String, Object> params, Map<String, String> headers) throws IOException {
         HttpGet httpGet = new HttpGet(spec);
 
         if (headers != null && headers.size() > 0) {
@@ -56,23 +56,19 @@ public class HttpClientUtils {
         CloseableHttpClient client = HttpClientBuilder.create().build();
         CloseableHttpResponse response;
         String result = null;
-        try {
-            response = client.execute(httpGet);
-            result = EntityUtils.toString(response.getEntity());
-            log.debug(result);
-            response.close();
-            client.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        response = client.execute(httpGet);
+        result = EntityUtils.toString(response.getEntity());
+        log.debug(result);
+        response.close();
+        client.close();
         return result;
     }
 
-    public static String get(String spec, Map<String, Object> params) {
+    public static String get(String spec, Map<String, Object> params) throws IOException {
         return get(spec, params, null);
     }
 
-    public static String get(String spec) {
+    public static String get(String spec) throws IOException {
         return get(spec, null, null);
     }
 
@@ -101,11 +97,11 @@ public class HttpClientUtils {
         return post(spec, generateNameValuePairs(params));
     }
 
-    public static String postAsJson(String spec, Object obj) {
+    public static String postAsJson(String spec, Object obj) throws IOException {
         return postAsJson(spec, obj, null);
     }
 
-    public static String postAsJson(String spec, Object obj, Map<String, String> headers) {
+    public static String postAsJson(String spec, Object obj, Map<String, String> headers) throws IOException {
         log.debug(spec);
         HttpPost httpPost = new HttpPost(spec);
         httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
@@ -123,19 +119,15 @@ public class HttpClientUtils {
         CloseableHttpClient client = HttpClientBuilder.create().build();
         CloseableHttpResponse response;
         String result = null;
-        try {
-            response = client.execute(httpPost);
-            result = EntityUtils.toString(response.getEntity());
-            log.debug(result);
-            response.close();
-            client.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        response = client.execute(httpPost);
+        result = EntityUtils.toString(response.getEntity());
+        log.debug(result);
+        response.close();
+        client.close();
         return result;
     }
 
-    public static <T> T postAsJson(Class<T> clazz, String spec, Object obj) {
+    public static <T> T postAsJson(Class<T> clazz, String spec, Object obj) throws IOException {
         String json = postAsJson(spec, obj);
         return JsonMapper.parseObject(json, clazz);
     }

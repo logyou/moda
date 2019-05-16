@@ -1,0 +1,10 @@
+groups:
+- name: down
+  rules:
+  - alert: service_status
+    expr: up == 0
+    for: 10s
+    labels:
+      severity: warning
+    annotations:
+      summary: 'service is down'

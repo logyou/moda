@@ -2,6 +2,7 @@ package com.moda.demo;
 
 import com.moda.autoconfigure.sys.SysProperties;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -20,8 +21,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableConfigurationProperties(SysProperties.class)
 public class DemoServiceApplication {
     public static void main(String[] args) {
-        new SpringApplicationBuilder(DemoServiceApplication.class)
-                .web(WebApplicationType.NONE)
-                .run(args);
+        SpringApplication.run(DemoServiceApplication.class, args);
     }
 }

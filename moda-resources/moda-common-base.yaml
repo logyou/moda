@@ -52,3 +52,16 @@ mybatis:
     map-underscore-to-camel-case: true
     local-cache-scope: session
     jdbc-type-for-null: null
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  metrics:
+    tags:
+      application: ${spring.application.name}
