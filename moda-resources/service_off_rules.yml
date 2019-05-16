@@ -1,10 +1,10 @@
 groups:
 - name: down
   rules:
-  - alert: service_status
-    expr: up == 0
-    for: 10s
+  - alert: service_health_status
+    expr: service_health_status == 0
+    for: 30s
     labels:
       severity: warning
     annotations:
-      summary: 'service is down'
+      summary: 'service {{$labels.exported_application}} {{$labels.exported_instance}} is down'
