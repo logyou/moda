@@ -8,5 +8,8 @@ Moda 致力于提供微服务开发的一站式解决方案。此项目包含开
 - **接口文档**：基于 Swagger 自动生成接口文档，针对存在网关层的情况，实现了多个微服务接口文档组合为一个前端。
 - **实时日志**：基于 Kafka+ELK 实现日志实时上报和分析，使用 Logback 直接写入 Kafka ,即插即用。
 - **代码生成**：使用 MyBatis Generator 自动生成 Entity、DAO、XML ，自定义的和生成的隔离，可以多次覆盖生成，方便快捷。
+- **系统监控**：搭配 Prometheus 和 Grafana 的监控系统，实时监控各种指标，在出现异常时及时发出警报。
+- **链路追踪**：搭配 Elasticsearch 和 SkyWalking 的链路追踪 ，可跟踪调用走向和性能，有助于及时定位问题点。
+- **消息队列**：基于 RabbitMQ 或 RocketMQ 的分布式消息系统，解耦系统。
 # 系统架构图
 ![系统架构图](https://raw.githubusercontent.com/logyou/moda/master/moda-resources/images/archV4.jpg?token=AA2EC7QIAGLF3R25ROQDZFK44IGLK)
