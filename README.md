@@ -2,6 +2,7 @@
 Moda 致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用微服务的常用组件，方便开发者轻松使用该系统架构来开发分布式应用服务。
 # 相关资源
 - Github地址：[https://github.com/logyou/moda](https://github.com/logyou/moda)
+- 系统架构图地址：[https://www.processon.com/view/5cde23b0e4b06c0492f35bd1](https://www.processon.com/view/5cde23b0e4b06c0492f35bd1)
 # 主要功能
 - **接口网关**：基于 Spring Cloud Gateway 的网关作为流量的入口，在微服务系统中有着非常重要的作用，网关常见的功能有路由转发、权限校验、限流控制等作用。
 - **配置管理**：基于 Nacos 实现统一维护配置、API网关动态配置。
