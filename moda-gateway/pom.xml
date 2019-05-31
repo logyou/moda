@@ -12,6 +12,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <encoding>UTF-8</encoding>
+        <docker.image.prefix>moda</docker.image.prefix>
     </properties>
 
     <parent>
@@ -97,50 +98,32 @@
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>nexus-bensue</id>
-            <name>Own Nexus Repository</name>
-            <url>http://nexus.bensue.com/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>maven.org</id>
-            <name>mavenorg Releases</name>
-            <url>http://search.maven.org/</url>
-        </repository>
-        <repository>
-            <id>java-repos</id>
-            <name>Java Repository</name>
-            <url>http://download.java.net/maven/2/</url>
-        </repository>
-        <repository>
-            <id>springsource-repos</id>
-            <name>SpringSource Repository</name>
-            <url>http://repo.spring.io/release/</url>
-        </repository>
-        <repository>
-            <id>central-repos2</id>
-            <name>Central Repository 2</name>
-            <url>http://repo1.maven.org/maven2/</url>
-        </repository>
-        <repository>
-            <id>central-repos</id>
-            <name>Central Repository</name>
-            <url>http://repo.maven.apache.org/maven2</url>
-        </repository>
-    </repositories>
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.10</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <goals>
+                            <goal>build</goal>
+                            <goal>push</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <tag>${project.version}</tag>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>

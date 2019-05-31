@@ -45,8 +45,6 @@ public class HttpClientUtils {
             }
         }
 
-        log.debug(JsonMapper.toJsonStringIndent(httpGet.getAllHeaders()));
-
         if (params != null && params.size() > 0) {
             for (Map.Entry<String, Object> item : params.entrySet()) {
                 spec = UrlUtils.addUrlParams(spec, item.getKey(), String.valueOf(item.getValue()));
