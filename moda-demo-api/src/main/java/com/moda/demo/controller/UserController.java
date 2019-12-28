@@ -46,6 +46,7 @@ public class UserController extends BaseController {
     @RequestMapping("search")
     @ApiOperation(value = "用户信息", notes = "根据关键词搜索用户信息")
     public Result<Page<User>> search(@RequestBody UserSearchRequest request) {
+        logger.info("search...");
         return success(userService.search(request));
     }
 

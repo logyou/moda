@@ -6,5 +6,5 @@ spring:
       config:
         file-extension: yaml
         server-addr: 127.0.0.1:8848
-        shared-dataids: moda-common-base.yaml,moda-common-service.yaml
-        refreshable-dataids: moda-common-base.yaml,moda-common-service.yaml
+        shared-dataids: moda-common-base.yaml,moda-common-service.yaml,redis.yaml
+        refreshable-dataids: moda-common-base.yaml,moda-common-service.yaml,redis.yaml

@@ -1,6 +1,7 @@
 package com.moda.demo.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.moda.autoconfigure.sys.SysProperties;
 import com.moda.demo.dao.UserDao;
 import com.moda.demo.entity.User;
 import com.moda.demo.entity.UserExample;
@@ -10,6 +11,7 @@ import com.moda.demo.request.UserSearchRequest;
 import com.moda.demo.response.UserGetSimpleResponse;
 import com.moda.demo.service.UserService;
 import com.moda.entity.persistence.page.Page;
+import com.moda.redis.spring.boot.autoconfigure.RedisClient;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private RedisClient redisClient;
+    @Autowired
+    private SysProperties sysProperties;
 
     @Override
     public UserGetSimpleResponse getSimple(UserGetSimpleRequest request) {
@@ -38,6 +44,7 @@ public class UserServiceImpl implements UserService {
         example.createCriteria().andMobileLike("%" + request.getMobile() + "%");
         PageHelper.startPage(request.getPageNo(), request.getPageSize(), request.isFirstPage());
         List<User> list = userDao.selectByExample(example);
+        redisClient.set(sysProperties.getRedisPrefix() + ":count", list.size() + "");
         return Page.of(list);
     }
 
