@@ -15,6 +15,6 @@ Moda 致力于提供微服务开发的一站式解决方案。此项目包含开
 - **链路追踪**：搭配 Elasticsearch 和 SkyWalking 的链路追踪 ，可跟踪调用走向和性能，有助于及时定位问题点。
 - **消息队列**：基于 RabbitMQ 或 RocketMQ 的分布式消息系统，解耦系统。
 # 系统架构图
-![系统架构图](https://raw.githubusercontent.com/logyou/moda/master/moda-resources/images/archV4.jpg)](https://www.processon.com/view/5cde23b0e4b06c0492f35bd1)
+[![系统架构图](https://raw.githubusercontent.com/logyou/moda/master/moda-resources/images/archV4.jpg)](https://www.processon.com/view/5cde23b0e4b06c0492f35bd1)
 # SkyWalking图
 ![SkyWalking图](moda-resources/images/skywalking.png)
