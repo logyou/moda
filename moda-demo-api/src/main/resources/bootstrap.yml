@@ -8,3 +8,4 @@ spring:
         server-addr: localhost:8848
         shared-dataids: moda-common-base.yaml,moda-common-api.yaml,redis.yaml
         refreshable-dataids: moda-common-base.yaml,moda-common-api.yaml,redis.yaml
+        namespace: 21b60067-97cb-4da4-86a5-1798a69b059e

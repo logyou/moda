@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>moda-demo-parent</artifactId>
+    <artifactId>moda-demo-provider</artifactId>
     <version>1.0.0.1</version>
     <packaging>pom</packaging>
-    <name>moda-demo-parent</name>
+    <name>moda-demo-provider</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,8 +24,8 @@
     </parent>
 
     <modules>
-        <module>interface</module>
-        <module>service</module>
+        <module>moda-demo-interface</module>
+        <module>moda-demo-service</module>
     </modules>
 
     <dependencies>

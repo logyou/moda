@@ -24,14 +24,16 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+        namespace: 21b60067-97cb-4da4-86a5-1798a69b059e
 dubbo:
   scan:
     basePackages: com.moda
   registry:
-    address: nacos://localhost:8848
+    address: spring-cloud://localhost
   protocol:
     name: dubbo
     accesslog: true
+    port: -1
   provider:
     timeout: 6000
     validation: true
