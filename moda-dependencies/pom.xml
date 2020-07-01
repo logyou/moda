@@ -35,7 +35,7 @@
         <jdom2.version>2.0.6</jdom2.version>
         <dom4j.version>2.1.1</dom4j.version>
         <guava.version>22.0</guava.version>
-        <quartz.version>2.2.3</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
         <spring-data-redis.version>2.1.5.RELEASE</spring-data-redis.version>
         <commons-validator.version>1.6</commons-validator.version>
         <jaxrpc.version>1.1</jaxrpc.version>
