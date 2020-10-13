@@ -48,7 +48,7 @@
         <BASE64Decoder.version>1.6</BASE64Decoder.version>
         <easypoi.version>2.4.0</easypoi.version>
         <bcprov.version>1.45</bcprov.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <druid-spring-boot-starter.version>1.1.16</druid-spring-boot-starter.version>
         <mysql-connector-java.version>5.1.47</mysql-connector-java.version>
         <pagehelper-spring-boot-starter.version>1.2.10</pagehelper-spring-boot-starter.version>
