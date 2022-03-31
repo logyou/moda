@@ -16,7 +16,7 @@
         <moda-entity.version>1.0.0.1</moda-entity.version>
         <moda-util.version>1.0.0.1</moda-util.version>
         <moda-autoconfigure.version>1.0.0.1</moda-autoconfigure.version>
-        <spring.version>5.1.12.RELEASE</spring.version>
+        <spring.version>5.3.18</spring.version>
         <spring-cloud-dependencies.version>Greenwich.SR4</spring-cloud-dependencies.version>
         <spring-boot.version>2.1.11.RELEASE</spring-boot.version>
         <spring-cloud-alibaba-dependencies.version>2.1.1.RELEASE</spring-cloud-alibaba-dependencies.version>
