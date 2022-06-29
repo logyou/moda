@@ -61,7 +61,7 @@
         <javax.el-api.verion>3.0.1-b06</javax.el-api.verion>
         <javax.el.version>2.2.6</javax.el.version>
         <hibernate-validator.version>6.1.1.Final</hibernate-validator.version>
-        <poi.version>4.0.1</poi.version>
+        <poi.version>4.1.1</poi.version>
         <jackson-annotations.version>2.9.8</jackson-annotations.version>
         <apollo.version>1.3.0</apollo.version>
         <spring-cloud-alibaba.version>0.9.0.RELEASE</spring-cloud-alibaba.version>
